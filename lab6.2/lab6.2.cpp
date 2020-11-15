@@ -6,8 +6,12 @@ using namespace std;
 
 void search(int a[], const int SIZE);
 void neparni(int a[], const int SIZE);
+void Create_i(int* a, const int SIZE);
+void Print_i(int* a, const int SIZE);
 int search_r(int a[], const int SIZE, int i, int min);
+void Create_r(int* a, const int SIZE, int i);
 void neparni_r(int a[], const int SIZE);
+void Print_r(int* a, const int SIZE, int i);
 
 int main()
 {
@@ -20,17 +24,17 @@ int main()
     cout << "Введіть розмір масиву a[]:"; cin >> SIZE;
     int* a = new int[SIZE];
 
+    cout << "\nІтераційний спосіб:" << endl;
+    Create_i(a, SIZE);
     cout << "a[] = ";
-    for (int i = 0; i < SIZE; i++)
-    {
-        a[i] = rand() % SIZE;
-        cout << a[i] << " ";
-    }
+    Print_i(a, SIZE); cout << endl;
     cout << "\nНепарні числа(для перевірки): ";
     neparni(a, SIZE);
-    cout << "\nІтераційний спосіб:" << endl;
     search(a, SIZE);
     cout << "\nРекурсивний спосіб:" << endl; cout << endl;
+    Create_r(a, SIZE, 0);
+    cout << "a[] = ";
+    Print_r(a, SIZE, 0); cout << endl;
     cout << "Непарні числа(для перевірки): ";
     neparni_r(a, SIZE - 1);
     cout << endl;
@@ -41,9 +45,20 @@ int main()
     return 0;
 }
 //ітераційний спосіб
+void Create_i(int* a, const int SIZE)
+{
+    for(int i = 0; i < SIZE; i++)
+        a[i] = rand() % SIZE;
+
+}
+void Print_i(int* a, const int SIZE)
+{
+    for (int i = 0; i < SIZE; i++)
+        cout << a[i] << " ";
+}
 void search(int a[], const int SIZE)
 {
-    cout << "Значення індексів:";
+    cout << "\nЗначення індексів:";
     int min = a[0];
     for (int i = 1; i < SIZE; i++)
         if (a[i] % 2 != 0)
@@ -63,6 +78,22 @@ void neparni(int a[], const int SIZE)
     }
 }
 //рекурсивний спосіб
+void Create_r(int* a, const int SIZE, int i)
+{
+    if (i < SIZE)
+    {
+        a[i] = rand() % SIZE;
+        return Create_r(a, SIZE, i + 1);
+    }   
+}
+void Print_r(int* a, const int SIZE, int i)
+{
+    if (i < SIZE)
+    {
+        cout << a[i] << " ";
+        return Print_r(a, SIZE, i + 1);
+    }
+}
 int search_r(int a[], const int SIZE, int i, int min)
 {
     if (a[i] % 2 != 0)
